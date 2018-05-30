@@ -3,7 +3,7 @@ Bash Script to block ads by patching the hosts file of a compatible Linux/Unix s
 
 
 Requirements:
-- A machine running Linux, Unix, etc
+- A machine running Linux, Unix, etc.
 - Bash, Sudo and Curl installed on said system
 
 To Use*:
