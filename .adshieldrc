@@ -1,0 +1,27 @@
+# *** .adshieldrc ***
+# Config file for AdShield Script
+# By Benjamin Chafe
+# TODO: Clean up and add better documentation to config file.
+# TODO: Add support for multiple ad blocking domains.
+
+# HOSTSFILE - Location of hosts file
+HOSTSFILE="/etc/hosts"
+
+# DIR - Directory where hosts.old and patch files will be saved
+# (by default). Make sure directory exists before running script.
+DIR="/etc/hosts.d"
+
+# HOSTSOLD - Location of hosts.old file, where the hosts file will
+# be backed up. WARNING: Make any additional changes to domains here
+# instead of the regular /etc/hosts and run the script to update.
+# Otherwise, when the script is ran again, those changes in /etc/hosts
+# will be overwritten.
+HOSTSOLD="$DIR/hosts.old"
+
+# PATCH - Location of patch file, where the content of the online
+# host file will be saved. This file will be compared to the online
+# copy to check if any updates are available.
+PATCH="$DIR/patch"
+
+#DOMAIN - Domain from where the ad blocking will be retrieved from.
+DOMAIN="https://hosts-file.net/ad_servers.txt"
