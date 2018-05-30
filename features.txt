@@ -1,0 +1,43 @@
+so basically I have to completely revamp this program because I made the
+assumption that I could source an external file in the hosts file, which
+I can't. I thought my idea was clever, but I guess that's why no one
+else has done it yet. so basically, the program will work like this:
+
+
+-the program will query the patched hosts file and compare it to /etc/hosts
+
+-on the first run or if there's an update, the program will detect the
+difference and save the current hosts file as hosts.d/hosts.old
+
+-then the hosts.old will be copied to the hosts file, and appended with
+a warning message that changes to this file will be lost after updating,
+and then the internet patched file, downloaded in hosts.d/patch.
+
+-to check for updates, the script will compare the hosts.d/patch file to
+the internet patched file, and if they differ then it will update the patch
+file, and append the hosts.old
+
+
+features:
+
+-makes keeping your patched hosts file up to date as easy as running a script.
+
+-easily change the location, file names, hosts file to download, etc. from a
+config located by default at ~/.adshieldrc
+
+-downloading the .adshieldrc from the internet to simplify installation
+
+
+
+
+
+
+
+
+
+
+future ideas:
+
+-somehow implementing an outside file, or some means to make adding or removing
+addresses to be blocked easier than going straight to the hosts file, also to
+make changes persistent without having to add them in the hosts.old
