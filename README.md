@@ -3,8 +3,8 @@ Bash Script to block ads by patching the hosts file of a compatible Linux/Unix s
 
 
 Requirements:
-- A computer running Linux, Unix, etc
-- Bash, Sudo and Curl installed on said computer
+- A machine running Linux, Unix, etc
+- Bash, Sudo and Curl installed on said system
 
 To Use*:
 Download adshield.sh, cd to it's directory, and run in terminal with:
