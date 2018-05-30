@@ -8,48 +8,148 @@ echo "AdShield 1.0"
 
 
 
-
+CONFADD="https://raw.githubusercontent.com/bchafe/adshield/master/.adshieldrc"
 # CONFIG - This variable holds the location of the config
 # file. This file holds different settings for variables you can change.
 CONF="$SUDO_USER/.adshieldrc"
 source $CONF
 
 
-if  ! [ -e $DOMAIN ]
+
+
+if  ! [ -e $CONF ]
 then
 
 
-  echo "No domains file found! Downloading domains file..."
-  touch $DOMAIN
-  curl  $ADDRESS > $DOMAIN
+  echo "No config file found! Downloading config file"
+  touch $CONF
+  curl  $CONFADD > $CONF
   if [ $? == 0 ]
   then
-    echo "linking domains file in /etc/hosts..."
-    sudo sh -c 'echo source $DOMAIN >> /etc/hosts'
-    if [ $? == 0 ]
-    then
-
-      echo "Ad blocking complete! Run this script again to check for domains file updates."
-
-    else
-      echo "Error: Linking to /etc/hosts failed. Check if your system has 'sudo' installed and try again."
-    fi
-
+    echo "Config successfully downloaded."
 
   else
-    echo "Error: Downloading domains file failed. Make sure 'curl' is"
+    echo "Error: Downloading config file failed. Make sure 'curl' is"
     echo "installed, your internet connection is active and this address"
     echo "is accesible: $ADDRESS"
+    exit 1
+  fi
+fi
+
+if ! [ -e $DIR ]
+then
+  echo "$DIR not found, Making directory..."
+  mkdir $DIR
+
+
+  if [ $? == 0]
+  then
+
+    echo "Successful."
+
+  else
+
+    echo "Failed."
+    exit 1
+
   fi
 
 
-elif [ "curl $ADDRESS | diff $DOMAIN -" == 1 ]
+  echo "Copying hosts file to hosts.old..."
+  cat $HOSTSFILE > $HOSTSOLD
+
+  if [ $? == 0 ]
+  then
+
+    echo "Successful."
+
+  else
+
+    echo "Failed."
+    exit 1
+
+  fi
+  echo "Downloading patch file..."
+  curl $ADDRESS > $PATCH
+  if [ $? == 0 ]
+  then
+
+    echo "Successful."
+
+  else
+
+    echo "Failed."
+    exit 1
+
+  fi
+
+  echo "Updating hosts file..."
+  cat $HOSTSOLD > $HOSTSFILE
+
+  if ! [ $? == 0 ]
+  then
+    echo "Failed."
+    exit 1
+
+  fi
+  cat $PATCH >> $HOSTSFILE
+
+  if [ $? == 0 ]
+  then
+
+    echo "Successful."
+
+  else
+
+  echo "Failed."
+    exit 1
+
+  fi
+  echo "Setup Complete. So long, ads!"
+
+
+
+
+elif [ "curl $ADDRESS | diff $PATCH -" == 1 ]
 then
 
 
-  echo "Updates found. Updating domains file..."
-  wget -O $DOMAIN $ADDRESS
+  curl $ADDRESS > $PATCH
+  if [ $? == 0 ]
+  then
 
+    echo "Successful."
+
+  else
+
+    echo "Failed."
+    exit 1
+
+  fi
+
+  echo "Updating hosts file..."
+  cat $HOSTSOLD > $HOSTSFILE
+
+  if ! [ $? == 0 ]
+  then
+    echo "Failed."
+    exit 1
+
+  fi
+  cat $PATCH >> $HOSTSFILE
+
+  if [ $? == 0 ]
+  then
+
+    echo "Successful."
+
+  else
+
+  echo "Failed."
+    exit 1
+
+  fi
+  echo "Update Complete!"
 
 else
 
