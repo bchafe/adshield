@@ -23,5 +23,5 @@ HOSTSOLD="$DIR/hosts.old"
 # copy to check if any updates are available.
 PATCH="$DIR/patch"
 
-#DOMAIN - Domain from where the ad blocking will be retrieved from.
-DOMAIN="https://hosts-file.net/ad_servers.txt"
+# ADDRESS - Address from where the ad blocking will be retrieved from.
+ADDRESS="https://hosts-file.net/ad_servers.txt"
